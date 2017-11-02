@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+
+  <assemblyIdentity name="SheetManager" version="1.0.0.0"></assemblyIdentity>
+
+  <clrClass clsid="{51d93f21-9159-40bd-82b0-c80d2ddfdb02}" progid="SheetManager.StandardAddInServer" threadingModel="Both" name="SheetManager.StandardAddInServer" runtimeVersion=""></clrClass>
+
+  <file name="SheetManager.dll" hashalg="SHA1"></file>
+
+</assembly>
