@@ -86,10 +86,21 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SheetList.cs" />
+    <Compile Include="SheetManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SheetManagerForm.Designer.cs">
+      <DependentUpon>SheetManagerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="StandardAddInServer.cs">
       <SubType>Code</SubType>
@@ -103,6 +114,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SheetManagerForm.resx">
+      <DependentUpon>SheetManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
