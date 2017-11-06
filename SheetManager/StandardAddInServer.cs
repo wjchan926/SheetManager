@@ -20,7 +20,7 @@ namespace SheetManager
 
         // Inventor application object.
         private Inventor.Application m_inventorApplication;
-        private ButtonDefinition m_featureCountButtonDef;
+        private ButtonDefinition m_SheetManagerButton;
         private static String addInGUID = "51d93f21-9159-40bd-82b0-c80d2ddfdb02";
 
         public StandardAddInServer()
@@ -43,45 +43,45 @@ namespace SheetManager
 
             ControlDefinitions controlDefs = m_inventorApplication.CommandManager.ControlDefinitions;
 
-            m_featureCountButtonDef = controlDefs.AddButtonDefinition("Sheet Manager", "SheetManager", CommandTypesEnum.kQueryOnlyCmdType, addInGUID, "Opens the Sheet Manager for the active drawing.", "Sheet Manager");
-
-            CommandCategory cmdCat = m_inventorApplication.CommandManager.CommandCategories.Add("Sheet Manager", "Autodesk:CmdCategory:SheetManager", addInGUID);
-
-            cmdCat.Add(m_featureCountButtonDef);
+            m_SheetManagerButton = controlDefs.AddButtonDefinition("Sheet Manager", "SheetManager", CommandTypesEnum.kQueryOnlyCmdType, addInGUID, "Opens the Sheet Manager for the active drawing.", "Sheet Manager");
 
             if (firstTime)
             {
+
                 try
                 {
                     if (m_inventorApplication.UserInterfaceManager.InterfaceStyle == InterfaceStyleEnum.kRibbonInterface)
                     {
                         Ribbon ribbon = m_inventorApplication.UserInterfaceManager.Ribbons["Drawing"];
-                        RibbonTab tab = ribbon.RibbonTabs["id_TabModel"];
+                        RibbonTab tab = ribbon.RibbonTabs["id_TabPlaceViews"];
 
                         try
                         {
-                            RibbonPanel panel = tab.RibbonPanels.Add("Ribbon Demo", "Autodesk:RibbonDemoC#:Panel1", addInGUID, "", false);
-                            CommandControl control1 = panel.CommandControls.AddButton(m_featureCountButtonDef, true, true, "", false);
+                            // For ribbon interface
+                            RibbonPanel panel = tab.RibbonPanels.Add("Sheet Manager", "Autodesk:SheetManager:Panel1", addInGUID, "", false);
+                            CommandControl control1 = panel.CommandControls.AddButton(m_SheetManagerButton, true, true, "", false);
                         }
                         catch (Exception ex)
                         {
-                            
+
                         }
                     }
                     else
                     {
-                        CommandBar oCommandBar = m_inventorApplication.UserInterfaceManager.CommandBars["DLxDrawingStandardCmdBar"];
-                        oCommandBar.Controls.AddButton(m_featureCountButtonDef, 0);
+                        // For classic interface, possibly incorrect code
+                        CommandBar oCommandBar = m_inventorApplication.UserInterfaceManager.CommandBars["DLxDrawingViewCmdBar"];
+                        oCommandBar.Controls.AddButton(m_SheetManagerButton, 0);
                     }
                 }
                 catch
                 {
-                    CommandBar oCommandBar = m_inventorApplication.UserInterfaceManager.CommandBars["DLxDrawingStandardCmdBar"];
-                    oCommandBar.Controls.AddButton(m_featureCountButtonDef, 0);
-                }
+                    // For classic interface, possibly incorrect code
+                    CommandBar oCommandBar = m_inventorApplication.UserInterfaceManager.CommandBars["DLxDrawingViewCmdBar"];
+                    oCommandBar.Controls.AddButton(m_SheetManagerButton, 0);
+                }             
             }
 
-     
+            m_SheetManagerButton.OnExecute += new ButtonDefinitionSink_OnExecuteEventHandler(m_SheetManagerButton_OnExecute);
         }
 
         public void Deactivate()
@@ -95,6 +95,9 @@ namespace SheetManager
             // Release objects.
             Marshal.ReleaseComObject(m_inventorApplication);
             m_inventorApplication = null;
+
+            Marshal.ReleaseComObject(m_SheetManagerButton);
+            m_SheetManagerButton = null;
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -118,9 +121,9 @@ namespace SheetManager
                 // TODO: Add ApplicationAddInServer.Automation getter implementation
                 return null;
             }
-        }        
+        }
 
-        public void m_featureCountButtonDef_OnExecute(NameValueMap Context)
+        public void m_SheetManagerButton_OnExecute(NameValueMap Context)
         {
             SheetManagerForm smf = new SheetManagerForm();
             smf.Show();
