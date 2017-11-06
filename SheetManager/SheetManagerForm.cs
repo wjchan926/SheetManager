@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Inventor;
 
 namespace InvAddIn
 {
@@ -21,7 +22,15 @@ namespace InvAddIn
             sheetList = new SheetList();
 
             // Add List of Pages to Sheet View
-            sheetListView.Items.Add(sheetList.ToString());
+            foreach(SheetItem sheetItem in sheetList.getSheetList())
+            {
+                ListViewItem item = new ListViewItem();
+                item.Text = sheetItem.getName();
+                item.Tag = sheetItem;
+
+                sheetListView.Items.Add(item);
+            }
+            
         }
 
         private void selectAllBtn_Click(object sender, EventArgs e)
@@ -38,6 +47,29 @@ namespace InvAddIn
             {
                 listViewItem.Checked = false;
             }
+        }
+
+        private void activateBtn_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem listViewItem in sheetListView.CheckedItems)
+            {               
+                ((SheetItem)listViewItem.Tag).getSheet().ExcludeFromPrinting = false;
+                ((SheetItem)listViewItem.Tag).getSheet().ExcludeFromCount = false;
+            }
+        }
+
+        private void deactivateBtn_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem listViewItem in sheetListView.CheckedItems)
+            {
+                ((SheetItem)listViewItem.Tag).getSheet().ExcludeFromPrinting = true;
+                ((SheetItem)listViewItem.Tag).getSheet().ExcludeFromCount = true;
+            }
+        }
+
+        private void doneBtn_Click(object sender, EventArgs e)
+        {          
+            Close();
         }
     }
 }

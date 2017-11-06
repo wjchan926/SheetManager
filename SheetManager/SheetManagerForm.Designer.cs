@@ -28,28 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.sheetListView = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.selectAllBtn = new System.Windows.Forms.Button();
             this.deselectAllBtn = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.activateBtn = new System.Windows.Forms.Button();
+            this.deactivateBtn = new System.Windows.Forms.Button();
             this.doneBtn = new System.Windows.Forms.Button();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.sheetListView = new System.Windows.Forms.ListView();
             this.SuspendLayout();
-            // 
-            // sheetListView
-            // 
-            this.sheetListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
-            this.sheetListView.Location = new System.Drawing.Point(12, 12);
-            this.sheetListView.Name = "sheetListView";
-            this.sheetListView.Size = new System.Drawing.Size(237, 400);
-            this.sheetListView.TabIndex = 1;
-            this.sheetListView.UseCompatibleStateImageBehavior = false;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Sheet Name";
             // 
             // selectAllBtn
             // 
@@ -71,23 +57,25 @@
             this.deselectAllBtn.UseVisualStyleBackColor = true;
             this.deselectAllBtn.Click += new System.EventHandler(this.deselectAllBtn_Click);
             // 
-            // button3
+            // activateBtn
             // 
-            this.button3.Location = new System.Drawing.Point(12, 447);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "Activate";
-            this.button3.UseVisualStyleBackColor = true;
+            this.activateBtn.Location = new System.Drawing.Point(12, 447);
+            this.activateBtn.Name = "activateBtn";
+            this.activateBtn.Size = new System.Drawing.Size(75, 23);
+            this.activateBtn.TabIndex = 4;
+            this.activateBtn.Text = "Activate";
+            this.activateBtn.UseVisualStyleBackColor = true;
+            this.activateBtn.Click += new System.EventHandler(this.activateBtn_Click);
             // 
-            // button4
+            // deactivateBtn
             // 
-            this.button4.Location = new System.Drawing.Point(93, 447);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 5;
-            this.button4.Text = "Deactivate";
-            this.button4.UseVisualStyleBackColor = true;
+            this.deactivateBtn.Location = new System.Drawing.Point(93, 447);
+            this.deactivateBtn.Name = "deactivateBtn";
+            this.deactivateBtn.Size = new System.Drawing.Size(75, 23);
+            this.deactivateBtn.TabIndex = 5;
+            this.deactivateBtn.Text = "Deactivate";
+            this.deactivateBtn.UseVisualStyleBackColor = true;
+            this.deactivateBtn.Click += new System.EventHandler(this.deactivateBtn_Click);
             // 
             // doneBtn
             // 
@@ -98,6 +86,24 @@
             this.doneBtn.TabIndex = 6;
             this.doneBtn.Text = "Done";
             this.doneBtn.UseVisualStyleBackColor = true;
+            this.doneBtn.Click += new System.EventHandler(this.doneBtn_Click);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Sheet Name";
+            this.columnHeader1.Width = 237;
+            // 
+            // sheetListView
+            // 
+            this.sheetListView.CheckBoxes = true;
+            this.sheetListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.sheetListView.Location = new System.Drawing.Point(12, 12);
+            this.sheetListView.Name = "sheetListView";
+            this.sheetListView.Size = new System.Drawing.Size(237, 400);
+            this.sheetListView.TabIndex = 1;
+            this.sheetListView.UseCompatibleStateImageBehavior = false;
+            this.sheetListView.View = System.Windows.Forms.View.Details;
             // 
             // SheetManagerForm
             // 
@@ -106,8 +112,8 @@
             this.CancelButton = this.doneBtn;
             this.ClientSize = new System.Drawing.Size(261, 482);
             this.Controls.Add(this.doneBtn);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.deactivateBtn);
+            this.Controls.Add(this.activateBtn);
             this.Controls.Add(this.deselectAllBtn);
             this.Controls.Add(this.selectAllBtn);
             this.Controls.Add(this.sheetListView);
@@ -119,13 +125,12 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListView sheetListView;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.Button selectAllBtn;
         private System.Windows.Forms.Button deselectAllBtn;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button activateBtn;
+        private System.Windows.Forms.Button deactivateBtn;
         private System.Windows.Forms.Button doneBtn;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ListView sheetListView;
     }
 }

@@ -2,6 +2,10 @@ using System;
 using System.Runtime.InteropServices;
 using Inventor;
 using Microsoft.Win32;
+using SheetManager;
+using System.Windows.Forms;
+using InvAddIn;
+
 
 namespace SheetManager
 {
@@ -16,6 +20,8 @@ namespace SheetManager
 
         // Inventor application object.
         private Inventor.Application m_inventorApplication;
+        private ButtonDefinition m_featureCountButtonDef;
+        private static String addInGUID = "51d93f21-9159-40bd-82b0-c80d2ddfdb02";
 
         public StandardAddInServer()
         {
@@ -34,6 +40,48 @@ namespace SheetManager
 
             // TODO: Add ApplicationAddInServer.Activate implementation.
             // e.g. event initialization, command creation etc.
+
+            ControlDefinitions controlDefs = m_inventorApplication.CommandManager.ControlDefinitions;
+
+            m_featureCountButtonDef = controlDefs.AddButtonDefinition("Sheet Manager", "SheetManager", CommandTypesEnum.kQueryOnlyCmdType, addInGUID, "Opens the Sheet Manager for the active drawing.", "Sheet Manager");
+
+            CommandCategory cmdCat = m_inventorApplication.CommandManager.CommandCategories.Add("Sheet Manager", "Autodesk:CmdCategory:SheetManager", addInGUID);
+
+            cmdCat.Add(m_featureCountButtonDef);
+
+            if (firstTime)
+            {
+                try
+                {
+                    if (m_inventorApplication.UserInterfaceManager.InterfaceStyle == InterfaceStyleEnum.kRibbonInterface)
+                    {
+                        Ribbon ribbon = m_inventorApplication.UserInterfaceManager.Ribbons["Drawing"];
+                        RibbonTab tab = ribbon.RibbonTabs["id_TabModel"];
+
+                        try
+                        {
+                            RibbonPanel panel = tab.RibbonPanels.Add("Ribbon Demo", "Autodesk:RibbonDemoC#:Panel1", addInGUID, "", false);
+                            CommandControl control1 = panel.CommandControls.AddButton(m_featureCountButtonDef, true, true, "", false);
+                        }
+                        catch (Exception ex)
+                        {
+                            
+                        }
+                    }
+                    else
+                    {
+                        CommandBar oCommandBar = m_inventorApplication.UserInterfaceManager.CommandBars["DLxDrawingStandardCmdBar"];
+                        oCommandBar.Controls.AddButton(m_featureCountButtonDef, 0);
+                    }
+                }
+                catch
+                {
+                    CommandBar oCommandBar = m_inventorApplication.UserInterfaceManager.CommandBars["DLxDrawingStandardCmdBar"];
+                    oCommandBar.Controls.AddButton(m_featureCountButtonDef, 0);
+                }
+            }
+
+     
         }
 
         public void Deactivate()
@@ -45,6 +93,7 @@ namespace SheetManager
             // TODO: Add ApplicationAddInServer.Deactivate implementation
 
             // Release objects.
+            Marshal.ReleaseComObject(m_inventorApplication);
             m_inventorApplication = null;
 
             GC.Collect();
@@ -69,6 +118,12 @@ namespace SheetManager
                 // TODO: Add ApplicationAddInServer.Automation getter implementation
                 return null;
             }
+        }        
+
+        public void m_featureCountButtonDef_OnExecute(NameValueMap Context)
+        {
+            SheetManagerForm smf = new SheetManagerForm();
+            smf.Show();
         }
 
         #endregion

@@ -41,7 +41,8 @@ namespace InvAddIn
                 // Add each sheet to the list
                 foreach (Sheet s in drawing.Sheets)
                 {
-                    sheetList.Add(s);
+                    SheetItem sheetItem = new SheetItem(s);
+                    sheetList.Add(sheetItem);
                 }
             }
             catch
