@@ -21,12 +21,13 @@ namespace SheetManager
         // Inventor application object.
         private Inventor.Application m_inventorApplication;
         private ButtonDefinition m_SheetManagerButton;
+        private ButtonDefinition m_PrintManagerButton;
         private static String addInGUID = "51d93f21-9159-40bd-82b0-c80d2ddfdb02";
 
         public StandardAddInServer()
         {
         }
-
+        
         #region ApplicationAddInServer Members
 
         public void Activate(Inventor.ApplicationAddInSite addInSiteObject, bool firstTime)
@@ -43,7 +44,8 @@ namespace SheetManager
 
             ControlDefinitions controlDefs = m_inventorApplication.CommandManager.ControlDefinitions;
 
-            m_SheetManagerButton = controlDefs.AddButtonDefinition("Sheet Manager", "SheetManager", CommandTypesEnum.kQueryOnlyCmdType, addInGUID, "Opens the Sheet Manager for the active drawing.", "Sheet Manager");
+            m_SheetManagerButton = controlDefs.AddButtonDefinition("Sheet\nManager", "SheetManager", CommandTypesEnum.kQueryOnlyCmdType, addInGUID, "Opens the Sheet Manager for the active drawing.", "Sheet Manager");
+            m_PrintManagerButton = controlDefs.AddButtonDefinition("Print\nManager", "PrintManager", CommandTypesEnum.kFileOperationsCmdType, addInGUID, "Opens the Print Manager for the active drawing.", "Print Manager");
 
             if (firstTime)
             {
@@ -59,8 +61,9 @@ namespace SheetManager
                         {
                             // For ribbon interface
                             // This is a new panel that can be made
-                            RibbonPanel panel = tab.RibbonPanels.Add("Drawing Manager", "Autodesk:SheetManager:Panel1", addInGUID, "",false);
+                            RibbonPanel panel = tab.RibbonPanels.Add("Drawing Manager", "Autodesk:DrawingManager:Panel1", addInGUID, "",false);
                             CommandControl control1 = panel.CommandControls.AddButton(m_SheetManagerButton, true, true, "", false);
+                            CommandControl control2 = panel.CommandControls.AddButton(m_PrintManagerButton, true, true, "", false);
                         }
                         catch (Exception ex)
                         {
@@ -72,6 +75,7 @@ namespace SheetManager
                         // For classic interface, possibly incorrect code
                         CommandBar oCommandBar = m_inventorApplication.UserInterfaceManager.CommandBars["DLxDrawingViewsPanelCmdBar"];
                         oCommandBar.Controls.AddButton(m_SheetManagerButton, 0);
+                        oCommandBar.Controls.AddButton(m_PrintManagerButton, 0);
                     }
                 }
                 catch
@@ -79,10 +83,12 @@ namespace SheetManager
                     // For classic interface, possibly incorrect code
                     CommandBar oCommandBar = m_inventorApplication.UserInterfaceManager.CommandBars["DLxDrawingViewsPanelCmdBar"];
                     oCommandBar.Controls.AddButton(m_SheetManagerButton, 0);
+                    oCommandBar.Controls.AddButton(m_PrintManagerButton, 0);
                 }             
             }
 
             m_SheetManagerButton.OnExecute += new ButtonDefinitionSink_OnExecuteEventHandler(m_SheetManagerButton_OnExecute);
+            m_PrintManagerButton.OnExecute += new ButtonDefinitionSink_OnExecuteEventHandler(m_PrintManagerButton_OnExecute);
         }
 
         public void Deactivate()
@@ -99,6 +105,9 @@ namespace SheetManager
 
             Marshal.ReleaseComObject(m_SheetManagerButton);
             m_SheetManagerButton = null;
+
+            Marshal.ReleaseComObject(m_PrintManagerButton);
+            m_PrintManagerButton = null;
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -126,10 +135,16 @@ namespace SheetManager
 
         public void m_SheetManagerButton_OnExecute(NameValueMap Context)
         {
-            SheetManagerForm smf = new SheetManagerForm();
-            smf.Show();
+            SheetManagerForm sheetManagerForm = new SheetManagerForm();
+            sheetManagerForm.ShowDialog();
         }
-    
+
+        public void m_PrintManagerButton_OnExecute(NameValueMap Context)
+        {
+            PrinterForm printerForm = new PrinterForm();            
+            printerForm.ShowDialog();                 
+        }
+
         #endregion
 
     }

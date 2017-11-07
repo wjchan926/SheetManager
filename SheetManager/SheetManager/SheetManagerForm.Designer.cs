@@ -91,7 +91,7 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "Sheet Name";
-            this.columnHeader1.Width = 237;
+            this.columnHeader1.Width = 236;
             // 
             // sheetListView
             // 
@@ -119,6 +119,7 @@
             this.Controls.Add(this.sheetListView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "SheetManagerForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Sheet Manager";
             this.ResumeLayout(false);
 

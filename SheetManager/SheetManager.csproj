@@ -101,6 +101,7 @@
     <Compile Include="PrintManager\PrinterForm.Designer.cs">
       <DependentUpon>PrinterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PrintManager\PrintToPDF.cs" />
     <Compile Include="SheetManager\SheetItem.cs" />
     <Compile Include="SheetManager\SheetList.cs" />
     <Compile Include="SheetManager\SheetManagerForm.cs">
