@@ -95,12 +95,18 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SheetItem.cs" />
-    <Compile Include="SheetList.cs" />
-    <Compile Include="SheetManagerForm.cs">
+    <Compile Include="PrintManager\PrinterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SheetManagerForm.Designer.cs">
+    <Compile Include="PrintManager\PrinterForm.Designer.cs">
+      <DependentUpon>PrinterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SheetManager\SheetItem.cs" />
+    <Compile Include="SheetManager\SheetList.cs" />
+    <Compile Include="SheetManager\SheetManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SheetManager\SheetManagerForm.Designer.cs">
       <DependentUpon>SheetManagerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="StandardAddInServer.cs">
@@ -108,7 +114,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SheetManager.X.manifest" />
+    <None Include="SheetManager\SheetManager.X.manifest" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Autodesk.SheetManager.Inventor.addin" />
@@ -117,7 +123,10 @@
     <None Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SheetManagerForm.resx">
+    <EmbeddedResource Include="PrintManager\PrinterForm.resx">
+      <DependentUpon>PrinterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SheetManager\SheetManagerForm.resx">
       <DependentUpon>SheetManagerForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

@@ -58,7 +58,8 @@ namespace SheetManager
                         try
                         {
                             // For ribbon interface
-                            RibbonPanel panel = tab.RibbonPanels.Add("Sheet Manager", "Autodesk:SheetManager:Panel1", addInGUID, "", false);
+                            // This is a new panel that can be made
+                            RibbonPanel panel = tab.RibbonPanels.Add("Drawing Manager", "Autodesk:SheetManager:Panel1", addInGUID, "",false);
                             CommandControl control1 = panel.CommandControls.AddButton(m_SheetManagerButton, true, true, "", false);
                         }
                         catch (Exception ex)
@@ -69,14 +70,14 @@ namespace SheetManager
                     else
                     {
                         // For classic interface, possibly incorrect code
-                        CommandBar oCommandBar = m_inventorApplication.UserInterfaceManager.CommandBars["DLxDrawingViewCmdBar"];
+                        CommandBar oCommandBar = m_inventorApplication.UserInterfaceManager.CommandBars["DLxDrawingViewsPanelCmdBar"];
                         oCommandBar.Controls.AddButton(m_SheetManagerButton, 0);
                     }
                 }
                 catch
                 {
                     // For classic interface, possibly incorrect code
-                    CommandBar oCommandBar = m_inventorApplication.UserInterfaceManager.CommandBars["DLxDrawingViewCmdBar"];
+                    CommandBar oCommandBar = m_inventorApplication.UserInterfaceManager.CommandBars["DLxDrawingViewsPanelCmdBar"];
                     oCommandBar.Controls.AddButton(m_SheetManagerButton, 0);
                 }             
             }
@@ -128,7 +129,7 @@ namespace SheetManager
             SheetManagerForm smf = new SheetManagerForm();
             smf.Show();
         }
-
+    
         #endregion
 
     }
