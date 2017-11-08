@@ -10,7 +10,7 @@ namespace InvAddIn
     class SheetItem
     {
         private Sheet sheet;
-        private String name;
+        private string name;
 
         public SheetItem(Sheet s)
         {
@@ -29,7 +29,7 @@ namespace InvAddIn
             return sheet;
         }
 
-        public String getName()
+        public string getName()
         {
             return name;
         }

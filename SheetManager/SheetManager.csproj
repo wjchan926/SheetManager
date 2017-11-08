@@ -95,13 +95,13 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PrintManager\PrinterForm.cs">
+    <Compile Include="PrintPageManager\PrinterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PrintManager\PrinterForm.Designer.cs">
+    <Compile Include="PrintPageManager\PrinterForm.Designer.cs">
       <DependentUpon>PrinterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PrintManager\PrintToPDF.cs" />
+    <Compile Include="PrintPageManager\PrintToPDF.cs" />
     <Compile Include="SheetManager\SheetItem.cs" />
     <Compile Include="SheetManager\SheetList.cs" />
     <Compile Include="SheetManager\SheetManagerForm.cs">
@@ -124,7 +124,7 @@
     <None Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="PrintManager\PrinterForm.resx">
+    <EmbeddedResource Include="PrintPageManager\PrinterForm.resx">
       <DependentUpon>PrinterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SheetManager\SheetManagerForm.resx">

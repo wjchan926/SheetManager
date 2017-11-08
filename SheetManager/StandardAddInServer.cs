@@ -22,7 +22,7 @@ namespace SheetManager
         private Inventor.Application m_inventorApplication;
         private ButtonDefinition m_SheetManagerButton;
         private ButtonDefinition m_PrintManagerButton;
-        private static String addInGUID = "51d93f21-9159-40bd-82b0-c80d2ddfdb02";
+        private static string addInGUID = "51d93f21-9159-40bd-82b0-c80d2ddfdb02";
 
         public StandardAddInServer()
         {
@@ -67,7 +67,7 @@ namespace SheetManager
                         }
                         catch (Exception ex)
                         {
-
+                            Console.WriteLine(ex.Message);
                         }
                     }
                     else
@@ -141,7 +141,7 @@ namespace SheetManager
 
         public void m_PrintManagerButton_OnExecute(NameValueMap Context)
         {
-            PrinterForm printerForm = new PrinterForm();            
+            PrinterForm printerForm = new PrinterForm();
             printerForm.ShowDialog();                 
         }
 
