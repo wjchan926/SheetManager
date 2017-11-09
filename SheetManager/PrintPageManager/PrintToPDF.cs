@@ -50,6 +50,7 @@ namespace InvAddIn
             startSheet = start;
             endSheet = end;
             printLocation = pdfType[printType];
+            description = desc;
         }
         
         public void print()
@@ -83,7 +84,9 @@ namespace InvAddIn
                 // Need Print Range for different prints
                 switch (printType)
                 {
-                    case ("Vendor"):                      
+                    case ("Vendor"):
+                        options.Value["Custom_Begin_Sheet"] = startSheet+2;
+                        options.Value["Custom_End_Sheet"] = endSheet+2;
                         options.Value["Sheet_Range"] = Inventor.PrintRangeEnum.kPrintSheetRange;
                         break;
                     case ("ER"):
