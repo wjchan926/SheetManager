@@ -46,6 +46,8 @@
             this.designRadBtn = new System.Windows.Forms.RadioButton();
             this.saveBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.numSheetstb = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.toolGroupBox.SuspendLayout();
             this.vendorGroupBox.SuspendLayout();
@@ -63,7 +65,7 @@
             this.groupBox1.Controls.Add(this.designRadBtn);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(222, 328);
+            this.groupBox1.Size = new System.Drawing.Size(233, 328);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Select Printing Option:";
@@ -86,7 +88,7 @@
             this.toolGroupBox.Enabled = false;
             this.toolGroupBox.Location = new System.Drawing.Point(26, 132);
             this.toolGroupBox.Name = "toolGroupBox";
-            this.toolGroupBox.Size = new System.Drawing.Size(181, 50);
+            this.toolGroupBox.Size = new System.Drawing.Size(194, 50);
             this.toolGroupBox.TabIndex = 7;
             this.toolGroupBox.TabStop = false;
             this.toolGroupBox.Text = "Tool Type:";
@@ -96,7 +98,7 @@
             this.toolTypetf.Enabled = false;
             this.toolTypetf.Location = new System.Drawing.Point(6, 20);
             this.toolTypetf.Name = "toolTypetf";
-            this.toolTypetf.Size = new System.Drawing.Size(169, 20);
+            this.toolTypetf.Size = new System.Drawing.Size(182, 20);
             this.toolTypetf.TabIndex = 0;
             // 
             // vendorRadBtn
@@ -122,7 +124,7 @@
             this.vendorGroupBox.Enabled = false;
             this.vendorGroupBox.Location = new System.Drawing.Point(26, 206);
             this.vendorGroupBox.Name = "vendorGroupBox";
-            this.vendorGroupBox.Size = new System.Drawing.Size(181, 108);
+            this.vendorGroupBox.Size = new System.Drawing.Size(194, 108);
             this.vendorGroupBox.TabIndex = 5;
             this.vendorGroupBox.TabStop = false;
             // 
@@ -158,7 +160,7 @@
             this.vendorTypetb.Enabled = false;
             this.vendorTypetb.Location = new System.Drawing.Point(6, 78);
             this.vendorTypetb.Name = "vendorTypetb";
-            this.vendorTypetb.Size = new System.Drawing.Size(169, 20);
+            this.vendorTypetb.Size = new System.Drawing.Size(182, 20);
             this.vendorTypetb.TabIndex = 2;
             // 
             // endPagetb
@@ -228,7 +230,7 @@
             // 
             // saveBtn
             // 
-            this.saveBtn.Location = new System.Drawing.Point(76, 346);
+            this.saveBtn.Location = new System.Drawing.Point(89, 353);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 23);
             this.saveBtn.TabIndex = 1;
@@ -239,7 +241,7 @@
             // cancelBtn
             // 
             this.cancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelBtn.Location = new System.Drawing.Point(157, 346);
+            this.cancelBtn.Location = new System.Drawing.Point(170, 353);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new System.Drawing.Size(75, 23);
             this.cancelBtn.TabIndex = 2;
@@ -247,13 +249,34 @@
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 341);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(70, 13);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Total Sheets:";
+            // 
+            // numSheetstb
+            // 
+            this.numSheetstb.BackColor = System.Drawing.SystemColors.Control;
+            this.numSheetstb.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.numSheetstb.Location = new System.Drawing.Point(12, 357);
+            this.numSheetstb.Name = "numSheetstb";
+            this.numSheetstb.ReadOnly = true;
+            this.numSheetstb.Size = new System.Drawing.Size(66, 13);
+            this.numSheetstb.TabIndex = 9;
+            // 
             // PrinterForm
             // 
             this.AcceptButton = this.saveBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelBtn;
-            this.ClientSize = new System.Drawing.Size(244, 381);
+            this.ClientSize = new System.Drawing.Size(257, 388);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.numSheetstb);
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.saveBtn);
             this.Controls.Add(this.groupBox1);
@@ -268,6 +291,7 @@
             this.vendorGroupBox.ResumeLayout(false);
             this.vendorGroupBox.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -291,5 +315,7 @@
         private System.Windows.Forms.RadioButton toolingRadBtn;
         private System.Windows.Forms.GroupBox toolGroupBox;
         private System.Windows.Forms.TextBox toolTypetf;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox numSheetstb;
     }
 }

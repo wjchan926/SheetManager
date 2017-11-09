@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Inventor;
 using System.Runtime.InteropServices;
-
+using System.Collections.Generic;
+using System.Collections;
 
 namespace InvAddIn
 {
@@ -24,8 +24,8 @@ namespace InvAddIn
             pdfType.Add("Release", "\\\\MSW-FP1\\Factory\\RELEASED DESIGNS\\");
             pdfType.Add("ER", "\\\\MSW-FP1\\Shared\\ISO9001_QMS\\ENGINEERING RELEASES\\");
             pdfType.Add("ECN", "\\\\MSW-FP1\\Shared\\ISO9001_QMS\\ENGINEERING CHANGE NOTICES\\");
-            pdfType.Add("Tooling", "\\\\MSW-FP1\\Shared\\Design Approval Dwgs\\Tooling Drawings\\");
-            pdfType.Add("Vendor", "\\\\MSW-FP1\\Shared\\Design Approval Dwgs\\VENDOR DESIGN APPROVALS\\");
+            pdfType.Add("Tooling", "\\\\MSW-FP1\\Shared\\Cad\\Design Approval Dwgs\\Tooling Drawings\\");
+            pdfType.Add("Vendor", "\\\\MSW-FP1\\Shared\\Cad\\Design Approval Dwgs\\VENDOR DESIGN APPROVALS\\");
         }
                 
         // Constructor
@@ -80,18 +80,24 @@ namespace InvAddIn
                 options.Value["Remove_Line_Weights"] = 1;
                 options.Value["Vector_Resolution"] = 400;
 
-                // Need Print Range for Vendor Prints
-                if (printType != "Vendor")
+                // Need Print Range for different prints
+                switch (printType)
                 {
-                    options.Value["Sheet Range"] = Inventor.PrintRangeEnum.kPrintAllSheets;
+                    case ("Vendor"):                      
+                        options.Value["Sheet_Range"] = Inventor.PrintRangeEnum.kPrintSheetRange;
+                        break;
+                    case ("ER"):
+                        drawing.Sheets[1].Activate();                    
+                        options.Value["Sheet_Range"] = Inventor.PrintRangeEnum.kPrintCurrentSheet;
+                        break;
+                    case ("ECN"):
+                        drawing.Sheets[2].Activate();  
+                        options.Value["Sheet_Range"] = Inventor.PrintRangeEnum.kPrintCurrentSheet;         
+                        break;
+                    default:
+                        options.Value["Sheet_Range"] = Inventor.PrintRangeEnum.kPrintAllSheets;
+                        break;
                 }
-                else
-                {
-                    options.Value["Custom_Begin_Sheet"] = startSheet;
-                    options.Value["Custom_End_Sheet"] = endSheet;
-                    options.Value["Sheet Range"] = Inventor.PrintRangeEnum.kPrintSheetRange;
-                }
-
             }
 
             // Get Customer Name
@@ -105,31 +111,33 @@ namespace InvAddIn
             switch (printType)
             {
                 case "Design":
-                    dataMedium.FileName = printLocation + customerName.ToString().Trim() + "-" + displayName + "_REV " + rev.ToString() + ".pdf";
+                    dataMedium.FileName = printLocation + customerName.ToString().Trim() + "-" + displayName + "_REV " + rev.Value + ".pdf";
                     break;
                 case "Release":
                     dataMedium.FileName = printLocation + displayName + ".pdf";
                     break;
                 case "ER":
                 case "ECN":
-                    dataMedium.FileName = printLocation + displayName + "-" + erecn.ToString() + ".pdf";
+                    dataMedium.FileName = printLocation + erecn.Value + ".pdf";
                     break;
                 case "Tooling":
-                    dataMedium.FileName = printLocation + displayName + "_REV " + rev.ToString() "-" + description + ".pdf";
+                    dataMedium.FileName = printLocation + displayName + "_REV " + rev.Value + "-" + description + ".pdf";
                     break;
-                case "Vendor":
-                    dataMedium.FileName = printLocation + displayName + "_REV " + rev.ToString() + "-" + description + ".pdf";
+                case "Vendor":                     
+                    dataMedium.FileName = printLocation + displayName + "_REV " + rev.Value + "-" + description + ".pdf";
                     break;
             }
 
             try
             {
                 oPDFAddin.SaveCopyAs(drawing, context, options, dataMedium);
+                
             }
             finally
             {
                 try
                 {
+                    System.Diagnostics.Process.Start(dataMedium.FileName);
                     System.Diagnostics.Process.Start(@printLocation);
                 }
                 catch (System.ComponentModel.Win32Exception win32Exception)

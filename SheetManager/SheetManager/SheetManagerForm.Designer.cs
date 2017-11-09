@@ -104,6 +104,7 @@
             this.sheetListView.TabIndex = 1;
             this.sheetListView.UseCompatibleStateImageBehavior = false;
             this.sheetListView.View = System.Windows.Forms.View.Details;
+            this.sheetListView.SelectedIndexChanged += new System.EventHandler(this.sheetListView_SelectedIndexChanged);
             // 
             // SheetManagerForm
             // 

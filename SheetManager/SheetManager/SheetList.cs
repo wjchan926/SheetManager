@@ -28,6 +28,11 @@ namespace InvAddIn
             return sheetList;
         }
 
+        public int getSize()
+        {
+            return sheetList.Count;
+        }
+
         // Imports all the sheets from the current Inventor Drawing
         private void importSheets()
         {

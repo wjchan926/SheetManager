@@ -19,6 +19,10 @@ namespace InvAddIn
         {
             InitializeComponent();
             printType = "Design";
+
+            SheetList tempSheetList = new InvAddIn.SheetList();
+            numSheetstb.Text = (tempSheetList.getSize()-2).ToString();
+            Console.WriteLine(tempSheetList.getSize());
         }
              
         private void cancelBtn_Click(object sender, EventArgs e)
@@ -88,5 +92,6 @@ namespace InvAddIn
         {
             printType = "ECN";
         }
+       
     }
 }

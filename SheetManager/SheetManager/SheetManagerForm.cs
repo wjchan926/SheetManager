@@ -24,11 +24,15 @@ namespace InvAddIn
             // Add List of Pages to Sheet View
             foreach(SheetItem sheetItem in sheetList.getSheetList())
             {
+
                 ListViewItem item = new ListViewItem();
                 item.Text = sheetItem.getName();
                 item.Tag = sheetItem;
 
-                sheetListView.Items.Add(item);
+                if (!item.Text.Equals("ER") && !item.Text.Equals("ECN"))
+                {
+                    sheetListView.Items.Add(item);
+                }
             }
             
         }
@@ -72,6 +76,9 @@ namespace InvAddIn
             Close();
         }
 
-  
+        private void sheetListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
