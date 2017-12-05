@@ -135,8 +135,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="PrintPageManager\print.ico" />
-    <EmbeddedResource Include="SheetManager\sheet manager.ico" />
+    <EmbeddedResource Include="print.ico" />
+    <EmbeddedResource Include="sheet manager.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

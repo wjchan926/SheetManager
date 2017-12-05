@@ -55,11 +55,11 @@ namespace SheetManager
 
             string appData = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
 
-            Icon smallPushSM = new Icon(appData + @"\Autodesk\ApplicationPlugins\SheetManager\SheetManager\sheet manager.ico");
-            Icon largePushSM = new Icon(appData + @"\Autodesk\ApplicationPlugins\SheetManager\SheetManager\sheet manager.ico");
+            Icon smallPushSM = new Icon(appData + @"\Autodesk\ApplicationPlugins\SheetManager\sheet manager.ico");
+            Icon largePushSM = new Icon(appData + @"\Autodesk\ApplicationPlugins\SheetManager\sheet manager.ico");
 
-            Icon smallPushPM = new Icon(appData + @"\Autodesk\ApplicationPlugins\SheetManager\PrintPageManager\print.ico");
-            Icon largePushPM = new Icon(appData + @"\Autodesk\ApplicationPlugins\SheetManager\PrintPageManager\print.ico");
+            Icon smallPushPM = new Icon(appData + @"\Autodesk\ApplicationPlugins\SheetManager\print.ico");
+            Icon largePushPM = new Icon(appData + @"\Autodesk\ApplicationPlugins\SheetManager\print.ico");
 
             //    System.IO.Directory.SetCurrentDirectory(originalDir);
 
