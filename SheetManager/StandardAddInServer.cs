@@ -5,7 +5,7 @@ using Microsoft.Win32;
 using SheetManager;
 using System.Windows.Forms;
 using InvAddIn;
-
+using System.Drawing;
 
 namespace SheetManager
 {
@@ -44,8 +44,34 @@ namespace SheetManager
 
             ControlDefinitions controlDefs = m_inventorApplication.CommandManager.ControlDefinitions;
 
-            m_SheetManagerButton = controlDefs.AddButtonDefinition("Sheet\nManager", "SheetManager", CommandTypesEnum.kQueryOnlyCmdType, addInGUID, "Opens the Sheet Manager for the active drawing.", "Sheet Manager");
-            m_PrintManagerButton = controlDefs.AddButtonDefinition("Print\nManager", "PrintManager", CommandTypesEnum.kFileOperationsCmdType, addInGUID, "Opens the Print Manager for the active drawing.", "Print Manager");
+            // Icons  
+            //   System.Diagnostics.Debug.WriteLine(System.IO.Directory.GetCurrentDirectory());
+
+            //string originalDir = System.IO.Directory.GetCurrentDirectory();
+            //string dir = "%APPDATA%\\Autodesk\\ApplicationPlugins\\AssemblyToParts\\";
+            //System.Diagnostics.Debug.WriteLine(System.IO.Directory.GetCurrentDirectory());
+            //System.IO.Directory.SetCurrentDirectory(dir);
+            //MessageBox.Show(System.IO.Directory.GetCurrentDirectory());
+
+            string appData = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
+
+            Icon smallPushSM = new Icon(appData + @"\Autodesk\ApplicationPlugins\SheetManager\SheetManager\sheet manager.ico");
+            Icon largePushSM = new Icon(appData + @"\Autodesk\ApplicationPlugins\SheetManager\SheetManager\sheet manager.ico");
+
+            Icon smallPushPM = new Icon(appData + @"\Autodesk\ApplicationPlugins\SheetManager\PrintPageManager\print.ico");
+            Icon largePushPM = new Icon(appData + @"\Autodesk\ApplicationPlugins\SheetManager\PrintPageManager\print.ico");
+
+            //    System.IO.Directory.SetCurrentDirectory(originalDir);
+
+            stdole.IPictureDisp smallPushIconSM = PictureDispConverter.ToIPictureDisp(smallPushSM);
+            stdole.IPictureDisp largePushIconSM = PictureDispConverter.ToIPictureDisp(largePushSM);
+
+            stdole.IPictureDisp smallPushIconPM = PictureDispConverter.ToIPictureDisp(smallPushPM);
+            stdole.IPictureDisp largePushIconPM = PictureDispConverter.ToIPictureDisp(largePushPM);
+            // End Icon code
+
+            m_SheetManagerButton = controlDefs.AddButtonDefinition("Sheet\nManager", "SheetManager", CommandTypesEnum.kQueryOnlyCmdType, addInGUID, "Opens the Sheet Manager for the active drawing.", "Sheet Manager", smallPushIconSM, largePushIconSM);
+            m_PrintManagerButton = controlDefs.AddButtonDefinition("Print\nManager", "PrintManager", CommandTypesEnum.kFileOperationsCmdType, addInGUID, "Opens the Print Manager for the active drawing.", "Print Manager", smallPushIconPM, largePushIconPM);
 
             if (firstTime)
             {
@@ -147,5 +173,81 @@ namespace SheetManager
 
         #endregion
 
+    }
+
+    public sealed class PictureDispConverter
+    {
+        [DllImport("OleAut32.dll", EntryPoint = "OleCreatePictureIndirect", ExactSpelling = true, PreserveSig = false)]
+        private static extern stdole.IPictureDisp OleCreatePictureIndirect([MarshalAs(UnmanagedType.AsAny)]
+            object picdesc, ref Guid iid, [MarshalAs(UnmanagedType.Bool)]
+            bool fOwn);
+
+
+        static Guid iPictureDispGuid = typeof(stdole.IPictureDisp).GUID;
+
+        private sealed class PICTDESC
+        {
+            private PICTDESC()
+            {
+            }
+
+
+            //Picture Types
+
+            public const short PICTYPE_UNINITIALIZED = -1;
+            public const short PICTYPE_NONE = 0;
+            public const short PICTYPE_BITMAP = 1;
+            public const short PICTYPE_METAFILE = 2;
+            public const short PICTYPE_ICON = 3;
+
+            public const short PICTYPE_ENHMETAFILE = 4;
+
+            [StructLayout(LayoutKind.Sequential)]
+            public class Icon
+            {
+                internal int cbSizeOfStruct = Marshal.SizeOf(typeof(PICTDESC.Icon));
+                internal int picType = PICTDESC.PICTYPE_ICON;
+                internal IntPtr hicon = IntPtr.Zero;
+                internal int unused1;
+
+                internal int unused2;
+
+                internal Icon(System.Drawing.Icon icon)
+                {
+                    this.hicon = icon.ToBitmap().GetHicon();
+                }
+            }
+
+
+            [StructLayout(LayoutKind.Sequential)]
+            public class Bitmap
+            {
+                internal int cbSizeOfStruct = Marshal.SizeOf(typeof(PICTDESC.Bitmap));
+                internal int picType = PICTDESC.PICTYPE_BITMAP;
+                internal IntPtr hbitmap = IntPtr.Zero;
+                internal IntPtr hpal = IntPtr.Zero;
+
+                internal int unused;
+
+                internal Bitmap(System.Drawing.Bitmap bitmap)
+                {
+                    this.hbitmap = bitmap.GetHbitmap();
+                }
+            }
+        }
+
+
+        public static stdole.IPictureDisp ToIPictureDisp(System.Drawing.Icon icon)
+        {
+            PICTDESC.Icon pictIcon = new PICTDESC.Icon(icon);
+            return OleCreatePictureIndirect(pictIcon, ref iPictureDispGuid, true);
+        }
+
+
+        public static stdole.IPictureDisp ToIPictureDisp(System.Drawing.Bitmap bmp)
+        {
+            PICTDESC.Bitmap pictBmp = new PICTDESC.Bitmap(bmp);
+            return OleCreatePictureIndirect(pictBmp, ref iPictureDispGuid, true);
+        }
     }
 }

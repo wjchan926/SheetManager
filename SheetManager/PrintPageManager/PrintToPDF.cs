@@ -6,6 +6,7 @@ using Inventor;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Collections;
+using System.Windows.Forms;
 
 namespace InvAddIn
 {
@@ -33,6 +34,8 @@ namespace InvAddIn
         {
             printType = s;
             printLocation = pdfType[printType];
+            startSheet = 0;
+            endSheet = 0;
         }
 
         // Tooling Constructor
@@ -41,6 +44,8 @@ namespace InvAddIn
             printType = s;
             description = desc;
             printLocation = pdfType[printType];
+            startSheet = 0;
+            endSheet = 0;
         }
 
         // Vendor Constructor
@@ -55,7 +60,7 @@ namespace InvAddIn
         
         public void print()
         {
-            Application inventorApp = (Application)Marshal.GetActiveObject("Inventor.Application");
+            Inventor.Application inventorApp = (Inventor.Application)Marshal.GetActiveObject("Inventor.Application");
             DrawingDocument drawing = (DrawingDocument)inventorApp.ActiveDocument;
 
             // This is the ID for the PDF addin, Casted to TranslatorAddIn
@@ -71,37 +76,42 @@ namespace InvAddIn
             context.Type = IOMechanismEnum.kFileBrowseIOMechanism;
 
             NameValueMap options = inventorApp.TransientObjects.CreateNameValueMap();
-
+         
             DataMedium dataMedium = inventorApp.TransientObjects.CreateDataMedium();
-
+                                  
             // Set PDF Print Options
             if (oPDFAddin.HasSaveCopyAsOptions[dataMedium, context, options])
-            {
+            {                        
+                 
                 options.Value["All_Color_AS_Black"] = 0;
                 options.Value["Remove_Line_Weights"] = 1;
                 options.Value["Vector_Resolution"] = 400;
+
+                // Defualt values
+                options.Value["Custom_Begin_Sheet"] = 1;
+                options.Value["Custom_End_Sheet"] =-1;
 
                 // Need Print Range for different prints
                 switch (printType)
                 {
                     case ("Vendor"):
-                        options.Value["Custom_Begin_Sheet"] = startSheet+2;
-                        options.Value["Custom_End_Sheet"] = endSheet+2;
+                        options.Value["Custom_Begin_Sheet"] = startSheet + 2;
+                        options.Value["Custom_End_Sheet"] = endSheet + 2;
                         options.Value["Sheet_Range"] = Inventor.PrintRangeEnum.kPrintSheetRange;
                         break;
-                    case ("ER"):
+                    case ("ER"):                        
                         drawing.Sheets[1].Activate();                    
                         options.Value["Sheet_Range"] = Inventor.PrintRangeEnum.kPrintCurrentSheet;
                         break;
-                    case ("ECN"):
+                    case ("ECN"):                       
                         drawing.Sheets[2].Activate();  
                         options.Value["Sheet_Range"] = Inventor.PrintRangeEnum.kPrintCurrentSheet;         
                         break;
-                    default:
+                    default:                                        
                         options.Value["Sheet_Range"] = Inventor.PrintRangeEnum.kPrintAllSheets;
                         break;
                 }
-            }
+            }           
 
             // Get Customer Name
             StringBuilder customerName = new StringBuilder(drawing.FullFileName.Trim());
@@ -129,15 +139,12 @@ namespace InvAddIn
                 case "Vendor":                     
                     dataMedium.FileName = printLocation + displayName + "_REV " + rev.Value + "-" + description + ".pdf";
                     break;
-            }
+            }     
 
             try
-            {
+            {                
                 oPDFAddin.SaveCopyAs(drawing, context, options, dataMedium);
-                
-            }
-            finally
-            {
+
                 try
                 {
                     System.Diagnostics.Process.Start(dataMedium.FileName);
@@ -149,6 +156,13 @@ namespace InvAddIn
                     Console.WriteLine(win32Exception.Message);
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Something went wrong.  Make sure PDF is not open.", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+            } 
         }
+
+
     }
 }

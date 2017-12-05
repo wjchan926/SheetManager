@@ -60,6 +60,7 @@ namespace InvAddIn
                     printToPDF.print();
                     break;                
             }
+            printToPDF = null;
      
             Close();
         }
@@ -72,7 +73,7 @@ namespace InvAddIn
             printType = "Tooling";
         
         }
-
+        
         private void designRadBtn_CheckedChanged(object sender, EventArgs e)
         {
             printType = "Design";
