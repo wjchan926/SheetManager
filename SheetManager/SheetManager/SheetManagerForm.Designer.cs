@@ -122,6 +122,7 @@
             this.Name = "SheetManagerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Sheet Manager";
+            this.Load += new System.EventHandler(this.SheetManagerForm_Load);
             this.ResumeLayout(false);
 
         }

@@ -14,13 +14,15 @@ namespace InvAddIn
     public partial class PrinterForm : Form
     {
         private string printType;
+        private Inventor.Application invApp;
 
-        public PrinterForm()
+        public PrinterForm(Inventor.Application currentApp)
         {
             InitializeComponent();
+            invApp = currentApp;
             printType = "Design";
 
-            SheetList tempSheetList = new InvAddIn.SheetList();
+            SheetList tempSheetList = new InvAddIn.SheetList(invApp);
             numSheetstb.Text = (tempSheetList.getSize()-2).ToString();
             Console.WriteLine(tempSheetList.getSize());
         }
@@ -48,15 +50,15 @@ namespace InvAddIn
             switch (printType)
             {
                 case "Tooling":
-                    printToPDF = new PrintToPDF(printType, toolTypetf.Text.Trim());
+                    printToPDF = new PrintToPDF(printType, toolTypetf.Text.Trim(), invApp);
                     printToPDF.print();
                     break;
                 case "Vendor":
-                    printToPDF = new PrintToPDF(printType, Int32.Parse(startPagetb.Text.Trim()), Int32.Parse(endPagetb.Text.Trim()), vendorTypetb.Text.Trim());
+                    printToPDF = new PrintToPDF(printType, Int32.Parse(startPagetb.Text.Trim()), Int32.Parse(endPagetb.Text.Trim()), vendorTypetb.Text.Trim(), invApp);
                     printToPDF.print();
                     break;
                 default:
-                    printToPDF = new PrintToPDF(printType);
+                    printToPDF = new PrintToPDF(printType, invApp);
                     printToPDF.print();
                     break;                
             }
@@ -93,6 +95,10 @@ namespace InvAddIn
         {
             printType = "ECN";
         }
-       
+
+        private void PrinterForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

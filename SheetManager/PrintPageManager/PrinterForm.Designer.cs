@@ -284,6 +284,7 @@
             this.Name = "PrinterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Print Manager";
+            this.Load += new System.EventHandler(this.PrinterForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.toolGroupBox.ResumeLayout(false);

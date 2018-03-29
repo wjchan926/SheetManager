@@ -41,6 +41,7 @@ namespace SheetManager
 
             // TODO: Add ApplicationAddInServer.Activate implementation.
             // e.g. event initialization, command creation etc.
+            
 
             ControlDefinitions controlDefs = m_inventorApplication.CommandManager.ControlDefinitions;
 
@@ -160,14 +161,14 @@ namespace SheetManager
         }
 
         public void m_SheetManagerButton_OnExecute(NameValueMap Context)
-        {
-            SheetManagerForm sheetManagerForm = new SheetManagerForm();
+        {            
+            SheetManagerForm sheetManagerForm = new SheetManagerForm(m_inventorApplication);
             sheetManagerForm.ShowDialog();
         }
 
         public void m_PrintManagerButton_OnExecute(NameValueMap Context)
         {
-            PrinterForm printerForm = new PrinterForm();
+            PrinterForm printerForm = new PrinterForm(m_inventorApplication);
             printerForm.ShowDialog();                 
         }
 
@@ -176,6 +177,7 @@ namespace SheetManager
     }
 
     public sealed class PictureDispConverter
+    // This seciton creates the icons for the add-ins
     {
         [DllImport("OleAut32.dll", EntryPoint = "OleCreatePictureIndirect", ExactSpelling = true, PreserveSig = false)]
         private static extern stdole.IPictureDisp OleCreatePictureIndirect([MarshalAs(UnmanagedType.AsAny)]

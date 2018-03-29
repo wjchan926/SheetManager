@@ -17,21 +17,23 @@ namespace InvAddIn
         private int startSheet;
         private int endSheet;
         private string description;
+        private Inventor.Application inventorApp { get; set; }
 
-        private static Dictionary<string, string> pdfType = new Dictionary<string, string>();
+        private static readonly Dictionary<string, string> pdfType = new Dictionary<string, string>
+        {
+            { "Design", "\\\\MSW-FP1\\Shared\\Cad\\Design Approval Dwgs\\" },
+            {"Release", "\\\\MSW-FP1\\Factory\\RELEASED DESIGNS\\" },
+            {"ER", "\\\\MSW-FP1\\Shared\\ISO9001_QMS\\ENGINEERING RELEASES\\" },
+            {"ECN", "\\\\MSW-FP1\\Shared\\ISO9001_QMS\\ENGINEERING CHANGE NOTICES\\" },
+            {"Tooling", "\\\\MSW-FP1\\Shared\\Cad\\Design Approval Dwgs\\Tooling Drawings\\" },
+            {"Vendor", "\\\\MSW-FP1\\Shared\\Cad\\Design Approval Dwgs\\VENDOR DESIGN APPROVALS\\" }
+        };        
 
-        static PrintToPDF(){
-            pdfType.Add("Design", "\\\\MSW-FP1\\Shared\\Cad\\Design Approval Dwgs\\");
-            pdfType.Add("Release", "\\\\MSW-FP1\\Factory\\RELEASED DESIGNS\\");
-            pdfType.Add("ER", "\\\\MSW-FP1\\Shared\\ISO9001_QMS\\ENGINEERING RELEASES\\");
-            pdfType.Add("ECN", "\\\\MSW-FP1\\Shared\\ISO9001_QMS\\ENGINEERING CHANGE NOTICES\\");
-            pdfType.Add("Tooling", "\\\\MSW-FP1\\Shared\\Cad\\Design Approval Dwgs\\Tooling Drawings\\");
-            pdfType.Add("Vendor", "\\\\MSW-FP1\\Shared\\Cad\\Design Approval Dwgs\\VENDOR DESIGN APPROVALS\\");
-        }
                 
         // Constructor
-        public PrintToPDF(string s)
+        public PrintToPDF(string s, Inventor.Application currentApp)
         {
+            inventorApp = currentApp;
             printType = s;
             printLocation = pdfType[printType];
             startSheet = 0;
@@ -39,8 +41,9 @@ namespace InvAddIn
         }
 
         // Tooling Constructor
-        public PrintToPDF(string s, string desc)
-        {            
+        public PrintToPDF(string s, string desc,Inventor.Application currentApp)
+        {
+            inventorApp = currentApp;
             printType = s;
             description = desc;
             printLocation = pdfType[printType];
@@ -49,8 +52,9 @@ namespace InvAddIn
         }
 
         // Vendor Constructor
-        public PrintToPDF(string s, int start, int end, string desc)
+        public PrintToPDF(string s, int start, int end, string desc, Inventor.Application currentApp)
         {
+            inventorApp = currentApp;
             printType = s;
             startSheet = start;
             endSheet = end;
@@ -59,8 +63,7 @@ namespace InvAddIn
         }
         
         public void print()
-        {
-            Inventor.Application inventorApp = (Inventor.Application)Marshal.GetActiveObject("Inventor.Application");
+        {            
             DrawingDocument drawing = (DrawingDocument)inventorApp.ActiveDocument;
 
             // This is the ID for the PDF addin, Casted to TranslatorAddIn

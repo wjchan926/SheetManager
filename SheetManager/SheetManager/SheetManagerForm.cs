@@ -15,11 +15,15 @@ namespace InvAddIn
     {
 
         private SheetList sheetList;
+        private Inventor.Application invApp;
 
-        public SheetManagerForm()
+        public SheetManagerForm(Inventor.Application currentApp)
         {
             InitializeComponent();
-            sheetList = new SheetList();
+            invApp = currentApp;
+
+            sheetList = new SheetList(invApp);
+           
 
             // Add List of Pages to Sheet View
             foreach(SheetItem sheetItem in sheetList.getSheetList())
@@ -77,6 +81,11 @@ namespace InvAddIn
         }
 
         private void sheetListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SheetManagerForm_Load(object sender, EventArgs e)
         {
 
         }

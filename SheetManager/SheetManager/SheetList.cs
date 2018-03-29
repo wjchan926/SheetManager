@@ -17,8 +17,10 @@ namespace InvAddIn
         private ArrayList sheetList = new ArrayList();
   
         // Default Constructor
-        public SheetList()
+        public SheetList(Inventor.Application currentApp)
         {
+            // Attempt to get a reference to a running instance of Inventor.
+            inventorApp = currentApp;
             importSheets();
         }
 
@@ -38,9 +40,6 @@ namespace InvAddIn
         {
             try
             {
-                // Attempt to get a reference to a running instance of Inventor.
-                inventorApp = (Inventor.Application)Marshal.GetActiveObject("Inventor.Application");
-
                 drawing = (DrawingDocument)inventorApp.ActiveDocument;
 
                 // Add each sheet to the list
