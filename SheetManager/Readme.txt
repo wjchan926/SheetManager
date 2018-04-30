@@ -1,3 +1,53 @@
+	Sheet Manager Addin Project
+	===============================
+	
+	Summary:
+	===============================
+	This Add-in provides Marlin engineers with custom printing utiltiy specific to the Marlin file system.  
+	This addin contains 2 main parts.
+	
+	Sheet Manager:
+	Allows drawing sheets to be turned on and off in mass.  Engineers no longer have to activate and turn each sheet on/off individually.
+	
+	Print Manager:
+	Allows engineers to quickly access locations for printing the various documents required for engineering, production, and quality assurance.
+
+	Requirements:
+	=============
+	Autodsk Inventor 2017 or later is required to run this addin.
+	Support for earlier versions has not been tested.
+
+	Installation:
+	=============
+	Installation files are not provided.
+	Contact wesley.j.chan@gmail.com for installation details.
+
+	License:
+	========
+	The MIT License (MIT)
+
+	Copyright (c) 2015 - Igor Antun
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
+
+	If installing on Autodesk Inventor 2011 and earlier:
+	(Support not test, use at own risk)
 	How to Register/Unregister 
 	=======================
 
