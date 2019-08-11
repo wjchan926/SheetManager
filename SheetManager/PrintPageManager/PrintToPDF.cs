@@ -68,7 +68,7 @@ namespace InvAddIn
 
             // This is the ID for the PDF addin, Casted to TranslatorAddIn
             TranslatorAddIn oPDFAddin = (Inventor.TranslatorAddIn)inventorApp.ApplicationAddIns.ItemById["{0AC6FD96-2F4D-42CE-8BE0-8AEA580399E4}"];
-
+            
             // Get the required document properties
             string displayName = drawing.DisplayName;
             Property rev = drawing.PropertySets["Inventor Summary Information"]["Revision Number"];
@@ -81,9 +81,9 @@ namespace InvAddIn
             NameValueMap options = inventorApp.TransientObjects.CreateNameValueMap();
          
             DataMedium dataMedium = inventorApp.TransientObjects.CreateDataMedium();
-                                  
+                     
             // Set PDF Print Options
-            if (oPDFAddin.HasSaveCopyAsOptions[dataMedium, context, options])
+            if (oPDFAddin.HasSaveCopyAsOptions[drawing, context, options])
             {                        
                  
                 options.Value["All_Color_AS_Black"] = 0;
