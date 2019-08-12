@@ -21,7 +21,7 @@ namespace InvAddIn
 
         private static readonly Dictionary<string, string> pdfType = new Dictionary<string, string>
         {
-            { "Design", "\\\\MSW-FP1\\Shared\\Cad\\Design Approval Dwgs\\" },
+            {"Design", "\\\\MSW-FP1\\Shared\\Cad\\Design Approval Dwgs\\" },
             {"Release", "\\\\MSW-FP1\\Factory\\RELEASED DESIGNS\\" },
             {"ER", "\\\\MSW-FP1\\Shared\\ISO9001_QMS\\ENGINEERING RELEASES\\" },
             {"ECN", "\\\\MSW-FP1\\Shared\\ISO9001_QMS\\ENGINEERING CHANGE NOTICES\\" },
@@ -70,7 +70,7 @@ namespace InvAddIn
             TranslatorAddIn oPDFAddin = (Inventor.TranslatorAddIn)inventorApp.ApplicationAddIns.ItemById["{0AC6FD96-2F4D-42CE-8BE0-8AEA580399E4}"];
             
             // Get the required document properties
-            string displayName = drawing.DisplayName;
+            string displayName = System.IO.Path.GetFileNameWithoutExtension(drawing.DisplayName);
             Property rev = drawing.PropertySets["Inventor Summary Information"]["Revision Number"];
 
             Property erecn = drawing.PropertySets["Inventor User Defined Properties"]["ER/ECN#"];            
